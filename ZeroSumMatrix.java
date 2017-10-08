@@ -1,9 +1,13 @@
 
-
+/*
+Code that generates the matrix for an arbritrary dihedral group given the order of its cyclic group. 
+*/
 public class ZeroSumMatrix {
 	int groupOrder;
 	int[][] groupTable;
 	
+	/*Testing code
+	*/
 	public static void main(String[] args)
 	{
 		System.out.println((-2)%3);
@@ -12,6 +16,8 @@ public class ZeroSumMatrix {
 		System.out.println(zero.add(2, 3));
 		System.out.println(zero.getInverse2(5));
 	}
+	
+	/*Instantiates matrix*/
 	public ZeroSumMatrix(int order)
 	{
 		this.groupOrder = order;
@@ -46,6 +52,8 @@ public class ZeroSumMatrix {
 		
 	}
 	
+	/*Prints the matrix out nicely */
+	
 	public void print()
 	{
 		
@@ -60,12 +68,16 @@ public class ZeroSumMatrix {
 			System.out.println(printValue);
 		}
 	}
+	
+	/*Adds two elements in the group together (i.e performs the binary operation on those two elements)*/
 		
 	public int add(int num1, int num2)
 	{
 		return groupTable[num1][num2];
 	}
 	
+	/*The following methods get an inverse of an arbitrary element of the dihedral group in two different ways 
+	*/
 	public int getInverse1(int num1)
 	{
 		int returnValue = 0;
