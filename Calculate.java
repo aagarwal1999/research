@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+/*Main class of code that calculates the data. Note this problem grows very very fast (O(n^n) unfortunately)*/
 public class Calculate {
 
 	public static void main(String[] args)
