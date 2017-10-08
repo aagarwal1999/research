@@ -9,7 +9,7 @@ public class Sequence {
 	ZeroSumMatrix zero; 
 	
 	
-	
+	/* Test Code */
 	public static void main(String[] args)
 	{
 		int[] seq = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9};
@@ -18,7 +18,8 @@ public class Sequence {
 		System.out.println(seqr.getAllowed());
 		
 	}
-
+	
+	/*Instantiates the sequence class*/
 	public Sequence(int[] seq, int groupOrder)
 	{
 		this.groupOrder = groupOrder;
@@ -32,7 +33,7 @@ public class Sequence {
 	public int[] getSequence() {
 		return sequence;
 	}
-	
+	/*Prints the sequence in a nice way*/
 	public void printSequence() {
 
 		String returnValue = " [ ";
@@ -46,20 +47,20 @@ public class Sequence {
 		System.out.println(returnValue);
 	}
 	
-	
+	/*Returns the matrix */
 	public int[][] getMatrix() {
 		return matrix;
 	}
 
-
+	/*Returns the set of allowed group values for that sequence */
 	public ArrayList<Integer> getAllowed() {
 		return allowed;
 	}
-
+	/*Returns the group order */
 	public int getGroupOrder() {
 		return groupOrder;
 	}
-
+	/*returns a separate constructor for the sequence that updates a sequence given a previous subsequence and a new element called num */
 	public Sequence(Sequence oldSeq, int num, int groupOrder)
 	{
 		this.groupOrder= groupOrder;
@@ -68,7 +69,7 @@ public class Sequence {
 		this.matrix = updateMatrix(oldSeq.matrix, num);
 		this.allowed = calculateAllowed();
 	}
-	
+	/*Calculates a the matrix*/
 	public int[][] calculateMatrix()
 	{
 		int[][] returnValue = new int[2*groupOrder][2*groupOrder];
@@ -81,7 +82,7 @@ public class Sequence {
 		return returnValue;
 				
 	}
-	
+	/*Updates a the matrix for the sequence*/
 	public int[][] updateMatrix(int[][] old, int num)
 	{
 		int[][] returnValue = new int[2*groupOrder][2*groupOrder];
@@ -113,7 +114,7 @@ public class Sequence {
 		return returnValue;
 		
 	}
-	
+	/*Updates a sequence by creating a new version (this is important to create a copy)*/
 	public int[] updateSequence(int[] old, int num)
 	{
 		int[] returnValue = new int[old.length + 1];
@@ -127,7 +128,7 @@ public class Sequence {
 		
 		return returnValue;
 	}
-	
+	/*Calculates the set of all elements that can be added to the sequence */
 	public ArrayList<Integer> calculateAllowed()
 	{
 		ArrayList<Integer> returnValue = new ArrayList<>();
@@ -142,7 +143,7 @@ public class Sequence {
 		
 		return returnValue;
 	}
-	
+	/*Prints the matrix*/
 	public void printMatrix(int[][] matrix)
 	{
 		for(int i = 0; i < matrix.length; i++)
@@ -156,7 +157,7 @@ public class Sequence {
 			System.out.println(printValue);
 		}
 	}
-	
+	/*Makes more sequences based on the allowed values*/
 	public ArrayList<Sequence> makeMoreSeq()
 	{
 		ArrayList<Sequence> branch = new ArrayList<>();
