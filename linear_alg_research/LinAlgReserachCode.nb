@@ -1,0 +1,514 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17295,        504]
+NotebookOptionsPosition[     16888,        489]
+NotebookOutlinePosition[     17245,        505]
+CellTagsIndexPosition[     17202,        502]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Vec", "[", 
+   RowBox[{"v_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"Subscript", "[", 
+      RowBox[{"v", ",", "#"}], "]"}], "&"}], "/@", 
+    RowBox[{"Range", "[", 
+     RowBox[{"0", ",", 
+      RowBox[{"n", "-", "1"}]}], "]"}]}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Creates", " ", "vector", " ", "of", " ", "n", " ", "elements", " ", 
+     "with", " ", "name", " ", "v"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"der", "[", 
+   RowBox[{"var_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"D", "[", 
+     RowBox[{"#", ",", 
+      RowBox[{"{", 
+       RowBox[{"var", ",", "n"}], "}"}]}], "]"}], "&"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "pure", " ", "partial", " ", "derivative", " ", "function", " ", "with", 
+     " ", "respect", " ", "to", " ", "variable", " ", "var", " ", "and", " ", 
+     "with", " ", "degreee", " ", "n"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"ApplyFuncList", "[", 
+   RowBox[{"F_", ",", "var_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", "[", "var", "]"}], "&"}], "/@", "F"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "applies", " ", "list", " ", "of", " ", "functions", " ", "onto", " ", 
+     "input"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"ListProduct", "[", "list_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Times", "@@", "list"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "multiplies", " ", "all", " ", "elements", " ", "in", " ", "a", " ", 
+     "list"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"Pow", "[", 
+   RowBox[{"b_", ",", "po_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"MapThread", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Switch", "[", 
+       RowBox[{
+        RowBox[{"#1", "<", "0"}], ",", "False", ",", 
+        RowBox[{"#2", "^", "#1"}], ",", "True", ",", 
+        RowBox[{"der", "[", 
+         RowBox[{"#2", ",", 
+          RowBox[{"-", "#1"}]}], "]"}]}], "]"}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"po", ",", "b"}], "}"}]}], "]"}], 
+   RowBox[{"(", 
+    RowBox[{"exponential", " ", "function", " ", "for", " ", 
+     RowBox[{"mapping", ".", "Inserts"}], " ", "partial", " ", "derivative", 
+     " ", "pure", " ", "function", " ", "for", " ", "negative", " ", 
+     RowBox[{"powers", "."}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"LinCombo", "[", 
+   RowBox[{"v_", ",", "list_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Dot", "[", 
+    RowBox[{"list", ",", 
+     RowBox[{"Vec", "[", 
+      RowBox[{"v", ",", 
+       RowBox[{"Length", "[", "list", "]"}]}], "]"}]}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Creates", " ", "a", " ", "linear", " ", "combo", " ", "given", " ", 
+     "any", " ", "list", " ", "with", " ", "constants", " ", "v_i"}], 
+    ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"Id", "[", "i_", "]"}], ":=", 
+  RowBox[{"i", " ", 
+   RowBox[{"(", 
+    RowBox[{"Identity", " ", "function"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"id", "=", 
+   RowBox[{
+    RowBox[{"Id", "[", "#", "]"}], "&"}]}], ";", 
+  RowBox[{"(", 
+   RowBox[{"Identity", " ", "pure", " ", "function"}], ")"}]}], "\n", 
+ RowBox[{
+  RowBox[{"SeePartials", "[", "expr_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReplaceAll", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{"#", ",", "var_"}], "]"}], "&"}], "\[Rule]", 
+      RowBox[{"Subscript", "[", 
+       RowBox[{"d", ",", "var"}], "]"}]}], "]"}], "[", "expr", "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+      "Change", " ", "partials", " ", "in", " ", "expression", " ", "to", " ",
+        "d_."}], ".."}], " ", "to", " ", "make", " ", "it", " ", "more", " ", 
+     "easily", " ", "readable"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"RemovePower", "[", 
+   RowBox[{"expr_", ",", "var_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Switch", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"ex", "=", 
+        RowBox[{"Exponent", "[", 
+         RowBox[{"expr", ",", "var"}], "]"}]}], ")"}], ">", "0"}], ",", 
+     "True", ",", 
+     RowBox[{"expr", "*", 
+      RowBox[{"var", "^", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", "ex"}], ")"}]}]}], ",", "False", ",", "expr"}], 
+    "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Reduces", " ", "order", " ", "of", " ", "var", " ", "in", " ", "expr", 
+     " ", "to", " ", "1"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"RemoveAllPower", "[", 
+    RowBox[{"expr_", ",", "varSpace_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Fold", "[", 
+     RowBox[{"RemovePower", ",", "expr", ",", "varSpace"}], "]"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+     "Reduces", " ", "order", " ", "of", " ", "all", " ", "variables", " ", 
+      "of", " ", "varSpace", " ", "in", " ", "expr", " ", "to", " ", "1"}], 
+     ")"}]}]}], "\n", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SinglePowers", "[", 
+   RowBox[{"n_", ",", "k_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Flatten", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{"Permutations", ",", 
+       RowBox[{"IntegerPartitions", "[", 
+        RowBox[{"k", ",", 
+         RowBox[{"{", "n", "}"}], ",", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+           RowBox[{"k", ">", "0"}], ",", "True", ",", 
+           RowBox[{"Range", "[", 
+            RowBox[{"0", ",", "k"}], "]"}], ",", "False", ",", 
+           RowBox[{"Range", "[", 
+            RowBox[{"k", ",", "0"}], "]"}]}], "]"}]}], "]"}]}], "]"}], ",", 
+     "1"}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Gives", " ", "powers", " ", "of", " ", "all", " ", "possible", " ", "k", 
+     " ", "degree", " ", "monomials", " ", "with", " ", "n", " ", 
+     "variables"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"SingleMonomials", "[", 
+   RowBox[{"v_", ",", "n_", ",", "k_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"ListProduct", "/@", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Pow", "[", 
+        RowBox[{
+         RowBox[{"Vec", "[", 
+          RowBox[{"v", ",", "n"}], "]"}], ",", "#"}], "]"}], "&"}], "/@", 
+      RowBox[{"SinglePowers", "[", 
+       RowBox[{"n", ",", "k"}], "]"}]}], ")"}]}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Returns", " ", "all", " ", "monomials", " ", "of", " ", "n", " ", 
+     "variables", " ", "and", " ", "degree", " ", "d", " ", "with", " ", 
+     "name", " ", "v"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"CombMonomials", "[", 
+   RowBox[{"P1_", ",", "P2_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Flatten", "[", 
+    RowBox[{"Outer", "[", 
+     RowBox[{"Times", ",", "P1", ",", "P2"}], "]"}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Takes", " ", "two", " ", "lists", " ", "of", " ", "k1", " ", "and", " ", 
+     "k2", " ", "multidegree", " ", "monomials", " ", "and", " ", "returns", 
+     " ", "list", " ", "of", " ", 
+     RowBox[{"(", 
+      RowBox[{"k1", ",", "k2"}], ")"}], " ", "degree", " ", "monomials"}], 
+    ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"SingleMonomialsList", "[", 
+   RowBox[{"v_", ",", "nVec_", ",", "kVec_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"SingleMonomials", "@@@", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{"v", ",", "nVec", ",", "kVec"}], "}"}], "]"}]}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"Returns", " ", "list", " ", "of", " ", "list", " ", "of", " ", 
+      RowBox[{"monomials", ".", "Each"}], " ", "element", " ", "has", " ", 
+      "all", " ", "monomials", " ", "of", " ", "nVec", 
+      RowBox[{"(", "i", ")"}], " ", "variables"}], ",", 
+     RowBox[{"kVec", 
+      RowBox[{"(", "i", ")"}], " ", "degree"}], ",", 
+     RowBox[{"and", " ", "name", " ", "v", 
+      RowBox[{
+       RowBox[{"(", "i", ")"}], "."}]}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"MultiDegreeMonomials", "[", 
+   RowBox[{"v_", ",", "nVec_", ",", "kVec_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Fold", "[", 
+    RowBox[{"CombMonomials", ",", 
+     RowBox[{"SingleMonomialsList", "[", 
+      RowBox[{"v", ",", "nVec", ",", "kVec"}], "]"}]}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+     "Returns", " ", "list", " ", "of", " ", "all", " ", "monomials", " ", 
+      "with", " ", "nVec", " ", "variables"}], ",", 
+     RowBox[{
+      RowBox[{"kVec", " ", "multi"}], "-", "degree"}], ",", 
+     RowBox[{"and", " ", "name", " ", "v"}]}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"RemovePartials", "[", "P_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"ReplaceAll", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{"#", ",", 
+         RowBox[{"{", 
+          RowBox[{"a_", ",", "b_"}], "}"}]}], "]"}], "&"}], "\[Rule]", "1"}], 
+     "]"}], "[", "P", "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{"Remove", " ", "all", " ", "partials", " ", "from", " ", "list"}],
+     ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"ExtractPartials", "[", "P_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"List", "@@@", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"P", "/", 
+        RowBox[{"RemovePartials", "[", "P", "]"}]}], ")"}], "*", "id"}], 
+     ")"}]}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Takes", " ", "out", " ", "all", " ", "partials", " ", "from", " ", 
+     "list"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"ApplyPartialDerMap", "[", 
+   RowBox[{"P_", ",", "expr_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"ApplyFuncList", "[", 
+    RowBox[{
+     RowBox[{"Composition", "@@@", 
+      RowBox[{"ExtractPartials", "[", "P", "]"}]}], ",", "expr"}], "]"}], "*", 
+   RowBox[{"RemovePartials", "[", "P", "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Applies", " ", "a", " ", "list", " ", "of", " ", "partial", " ", 
+     "operators", " ", "to", " ", "a", " ", "singular", " ", "given", " ", 
+     "term"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LinearMultiDegreeMap", "[", 
+    RowBox[{"v_", ",", "nVec_", ",", "kVec_", ",", "lVec_"}], "]"}], ":=", 
+   RowBox[{"MultiDegreeMonomials", "[", 
+    RowBox[{"v", ",", "nVec", ",", 
+     RowBox[{"lVec", "-", "kVec"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"VarSpace", "[", 
+   RowBox[{"v_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"Join", "@@", 
+    RowBox[{"MapThread", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Vec", "[", 
+        RowBox[{"#1", ",", "#2"}], "]"}], "&"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"v", ",", "n"}], "}"}]}], "]"}]}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Gives", " ", "all", " ", "variables", " ", "given", " ", "vector", " ", 
+     "of", " ", "names", " ", "v", " ", "and", " ", "#", " ", "of", " ", 
+     "variables", " ", "n"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"InverseCoordinateMap", "[", 
+   RowBox[{"expr_", ",", "basis_", ",", "varspace_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"PolynomialReduce", "[", 
+     RowBox[{"expr", ",", "basis", ",", "varspace"}], "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Rewrites", " ", "given", " ", "polynomial", " ", "expr", " ", "with", 
+     " ", "variables", " ", "varspace", " ", "in", " ", "polynomial", " ", 
+     "basis", " ", "basis"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"ApplyLinMap", "[", 
+   RowBox[{"v_", ",", "n_", ",", "k_", ",", "l_", ",", "c_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"Dot", "[", 
+      RowBox[{"c", ",", "#"}], "]"}], "&"}], "/@", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"ApplyPartialDerMap", "[", 
+        RowBox[{
+         RowBox[{"LinearMultiDegreeMap", "[", 
+          RowBox[{"v", ",", "n", ",", "k", ",", "l"}], "]"}], ",", "#"}], 
+        "]"}], "&"}], "/@", 
+      RowBox[{"MultiDegreeMonomials", "[", 
+       RowBox[{"v", ",", "n", ",", "k"}], "]"}]}], ")"}]}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+    "Gives", " ", "each", " ", "basis", " ", "vector", " ", "of", " ", "V", 
+     " ", "when", " ", "f", 
+     RowBox[{"(", "c", ")"}], " ", "is", " ", "applied", " ", "to", " ", 
+     "it"}], ")"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LinMapMatrix", "[", 
+    RowBox[{"v_", ",", "n_", ",", "k_", ",", "l_", ",", "c_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"InverseCoordinateMap", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"MultiDegreeMonomials", "[", 
+         RowBox[{"v", ",", "n", ",", "l"}], "]"}], ",", 
+        RowBox[{"VarSpace", "[", 
+         RowBox[{"v", ",", "n"}], "]"}]}], "]"}], "&"}], "/@", 
+     RowBox[{"ApplyLinMap", "[", 
+      RowBox[{"v", ",", "n", ",", "k", ",", "l", ",", "c"}], "]"}]}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Gives", " ", "M", 
+        RowBox[{"(", "c", ")"}]}], "..."}], " ", "hell", " ", "ya"}], 
+     ")"}]}]}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"MyCGuess", "[", 
+   RowBox[{"v_", ",", "n_", ",", "k_", ",", "l_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"RemoveAllPower", "[", 
+     RowBox[{"#", ",", 
+      RowBox[{"VarSpace", "[", 
+       RowBox[{"v", ",", "n"}], "]"}]}], "]"}], "&"}], "/@", 
+   RowBox[{"MultiDegreeMonomials", "[", 
+    RowBox[{"v", ",", "n", ",", 
+     RowBox[{"Abs", "[", 
+      RowBox[{"k", "-", "l"}], "]"}]}], "]"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LinMapMatrixCGuess", "[", 
+    RowBox[{"v_", ",", "n_", ",", "k_", ",", "l_"}], "]"}], ":=", 
+   RowBox[{"LinMapMatrix", "[", 
+    RowBox[{"v", ",", "n", ",", "k", ",", "l", ",", 
+     RowBox[{"MyCGuess", "[", 
+      RowBox[{
+       RowBox[{"Vec", "[", 
+        RowBox[{"d", ",", 
+         RowBox[{"Length", "[", "v", "]"}]}], "]"}], ",", "n", ",", "k", ",", 
+       "l"}], "]"}]}], "]"}]}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"MyRankGuess", "[", 
+   RowBox[{"k_", ",", "l_", ",", "n_"}], "]"}], ":=", 
+  RowBox[{"ListProduct", "[", 
+   RowBox[{"MapThread", "[", 
+    RowBox[{"Trans", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"MapThread", "[", 
+        RowBox[{"Min", ",", 
+         RowBox[{"{", 
+          RowBox[{"k", ",", "l"}], "}"}]}], "]"}], ",", "n"}], "}"}]}], "]"}],
+    "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Trans", "[", 
+    RowBox[{"val_", ",", "n_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"ListProduct", "[", 
+     RowBox[{
+      RowBox[{"Range", "[", 
+       RowBox[{"n", "-", "1"}], "]"}], "+", 
+      RowBox[{"ConstantArray", "[", 
+       RowBox[{"val", ",", 
+        RowBox[{"n", "-", "1"}]}], "]"}]}], "]"}], "/", 
+    RowBox[{"Factorial", "[", 
+     RowBox[{"n", "-", "1"}], "]"}]}]}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"EqualDim", "[", 
+   RowBox[{"v_", ",", "n_", ",", "k_", ",", "l_"}], "]"}], ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Length", "[", 
+     RowBox[{"MultiDegreeMonomials", "[", 
+      RowBox[{"v", ",", "n", ",", "k"}], "]"}], "]"}], "\[Equal]", 
+    RowBox[{"Length", "[", 
+     RowBox[{"MultiDegreeMonomials", "[", 
+      RowBox[{"v", ",", "n", ",", "l"}], "]"}], "]"}]}], ")"}]}], "\n", 
+ RowBox[{
+  RowBox[{"MatInfo", "[", "Mat_", "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"Equal", "@@", 
+     RowBox[{"Dimensions", "[", "Mat", "]"}]}], ",", 
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Det,Dimensions,Rank = \>\"", ",", 
+      RowBox[{"Det", "[", "Mat", "]"}], ",", "\"\<,\>\"", ",", 
+      RowBox[{"Dimensions", "[", "Mat", "]"}], ",", "\"\<,\>\"", ",", 
+      RowBox[{"MatrixRank", "[", "Mat", "]"}]}], "]"}]}], "]"}]}], "\n", 
+ RowBox[{
+  RowBox[{"Result", "[", 
+   RowBox[{"v_", ",", "n_", ",", "k_", ",", "l_"}], "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"k", "\[NotEqual]", "l"}], "&&", 
+     RowBox[{"EqualDim", "[", 
+      RowBox[{"v", ",", "n", ",", "k", ",", "l"}], "]"}]}], ",", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"MatInfo", "[", 
+       RowBox[{"LinMapMatrixCGuess", "[", 
+        RowBox[{"v", ",", "n", ",", "k", ",", "l"}], "]"}], "]"}], ";", 
+      RowBox[{"Print", "[", 
+       RowBox[{
+       "\"\<k,l,RankGuess = \>\"", ",", "k", ",", "\"\<,\>\"", ",", "l", ",", 
+        "\"\<,\>\"", ",", 
+        RowBox[{"MyRankGuess", "[", 
+         RowBox[{"k", ",", "l", ",", "n"}], "]"}]}], "]"}]}], ")"}]}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.7245929273527107`*^9, 
+  3.724592932734829*^9}},ExpressionUUID->"63e67ea7-98d0-4577-bd24-\
+937506cba718"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.724592939796606*^9, 
+  3.7245929404901953`*^9}},ExpressionUUID->"7db8f2a6-6bc1-4d37-943d-\
+2c56b7155836"]
+},
+WindowSize->{808, 691},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"11.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+10, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 16169, 462, 1648, "Input",ExpressionUUID->"63e67ea7-98d0-4577-bd24-937506cba718"],
+Cell[16730, 484, 154, 3, 30, "Input",ExpressionUUID->"7db8f2a6-6bc1-4d37-943d-2c56b7155836"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
